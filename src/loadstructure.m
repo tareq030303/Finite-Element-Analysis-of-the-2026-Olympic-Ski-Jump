@@ -3,7 +3,7 @@ function [file_i,xy,nnod,sizee,idb,ndof,incidenze,l,gamma,m,EA,EJ,posiz,nbeam,pr
 file_i = 'input.inp';
 fid = fopen(file_i, 'r');
 
-% Lettura Nodi
+% Read the nodes
 findcard(fid, '*NODES');
 nnod = 0;
 while true
@@ -17,7 +17,7 @@ while true
     xy(nnod, :) = dati(5:6)';
 end
 
-% Costruzione matrice idb (Gradi di libertà)
+% Construct idb matrix (dofs)
 idb = zeros(nnod, 3);
 ndof = 0;
 for i = 1:nnod
@@ -38,7 +38,7 @@ for i = 1:nnod
     end
 end
 
-% Lettura Travi (*BEAMS)
+% Beams analysis
 findcard(fid, '*BEAMS');
 nbeam = 0;
 while true
@@ -60,7 +60,7 @@ while true
     gamma(nbeam, 1) = atan2(dy, dx);
 end
 
-% Lettura Proprietà (*PROPERTIES)
+% Read properties
 findcard(fid, '*PROPERTIES');
 while true
     riga = scom(fid);
